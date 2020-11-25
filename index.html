@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WBPM Viewer</title>
+  <script src="wbmp.js"></script>
+  <script>
+
+function init(){
+  var img = document.getElementById('img');
+  WBMP.decode(img, 'test.wbmp');
+}
+
+function upload(){
+  file = document.getElementById("fileSelection").files[0];
+
+  reader = new FileReader();
+  reader.onload = function (e) {
+    bin = e.target.result
+    var img = document.getElementById('img');
+    WBMP.decodeBin(img, bin);
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function zoomIn(){
+  var img = document.getElementById('img');
+  img.height = img.height + 8; 
+}
+
+function zoomOut(){
+  var img = document.getElementById('img');
+  img.height = img.height - 8; 
+}
+
+  </script>
+</head>
+
+<body onload="init()">
+  <div>
+    <button onclick="zoomIn()">+</button>
+    <button onclick="zoomOut()">-</button>
+    <input id="fileSelection" type="file" onchange="upload();"></input>
+  </div>
+  <br>
+  <div>
+    <img id="img" style="image-rendering: pixelated; image-rendering: -moz-crisp-edges;"></img>
+  </div>
+  <br>
+  <div>
+  </div>
+</body>
+</html>
